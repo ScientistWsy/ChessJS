@@ -31,6 +31,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   rezise();
   board(true);
   startPosition();
+  pieceAction();
   setUpPositions();
 });
 
@@ -101,6 +102,47 @@ function setUpPositions() {
     element.addEventListener("click", function () {
       move(item);
     });
+  });
+}
+
+function pieceAction() {
+  const elements = document.querySelectorAll(".piece");
+
+  elements.forEach(function (img) {
+    const color = img.getAttribute("data-color");
+    const type = img.getAttribute("alt");
+    img.addEventListener("click", function () {
+      const position = img.getAttribute("data-position");
+      selected(position, type, color);
+    });
+  });
+}
+
+function selected(position, type, color) {
+  if (color != turn) return;
+
+  let out = false;
+
+  square.forEach((item) => {
+    if (item.id === position && item.classList.contains("next")) {
+      out = true;
+      return;
+    }
+  });
+
+  if (out) return;
+
+  piece.position = position;
+  piece.color = color;
+  piece.type = type;
+
+  clearSelection();
+}
+
+function clearSelection() {
+  square.forEach((item) => {
+    item.classList.remove("next");
+    item.classList.remove("orange");
   });
 }
 
