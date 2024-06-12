@@ -19,6 +19,8 @@ let piece = {
   color: null,
 };
 
+let turn = "White";
+
 let square = [];
 
 let maps = new Map();
