@@ -181,6 +181,13 @@ function markPositions(steps, view = false) {
   });
 }
 
+function getPieceByPosition(position) {
+  const imgElement = document.querySelector(
+    '[data-position="' + position + '"]'
+  );
+  return imgElement;
+}
+
 //#endregion
 
 //#region Start Position
