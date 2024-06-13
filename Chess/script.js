@@ -139,12 +139,45 @@ function selected(position, type, color) {
   piece.type = type;
 
   clearSelection();
+
+  if (type.includes("Pawn")) {
+    square.forEach((item) => {
+      if (item.id === position) {
+        markPositions(movePawn(item.id, color));
+      }
+    });
+  }
 }
 
 function clearSelection() {
   square.forEach((item) => {
     item.classList.remove("next");
     item.classList.remove("orange");
+  });
+}
+
+function updateMap() {
+  if (piece.color === "White") {
+    markPositions(motion_black, true);
+  } else {
+    markPositions(motion_white, true);
+  }
+}
+
+function markPositions(steps, view = false) {
+  console.log(steps);
+  if (steps == null) return;
+  steps.forEach((item) => {
+    square.forEach((next) => {
+      const position = document.getElementById(next.id);
+      if (next.id == item.toString().padStart(2, "0")) {
+        if (!view) {
+          position.classList.add("next");
+        } else {
+          position.classList.add("orange");
+        }
+      }
+    });
   });
 }
 
@@ -202,6 +235,41 @@ function startPiece(img, reference) {
     maps.set(parseInt(squareId), img.alt);
     document.getElementById(squareId).appendChild(img.cloneNode(true));
   });
+}
+
+//#endregion
+
+//#region Motion
+
+function move(element) {
+  const imgElement = getPieceByPosition(piece.position);
+
+  if (element.id === piece.position) return;
+
+  if (element.alt?.includes("King")) roqueConditionMove(element);
+
+  if (element.classList.contains("next")) {
+    if (!imgElement.getAttribute("data-move")) {
+      if (imgElement.alt.includes("King") || imgElement.alt.includes("Rook")) {
+        imgElement.setAttribute("data-move", "true");
+        if (getPieceByPosition(element.id)) roque(piece.position, element.id);
+        else {
+          element.innerHTML = "";
+          element.appendChild(imgElement);
+        }
+      } else {
+        element.innerHTML = "";
+        element.appendChild(imgElement);
+      }
+    }
+
+    imgElement.setAttribute("data-position", element.id);
+
+    turn = turn == "White" ? (turn = "Black") : (turn = "White");
+  }
+
+  clearSelection();
+  updateMap();
 }
 
 //#endregion
