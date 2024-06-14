@@ -149,19 +149,21 @@ function selected(position, type, color) {
   }
 }
 
-function clearSelection() {
-  square.forEach((item) => {
-    item.classList.remove("next");
-    item.classList.remove("orange");
-  });
-}
-
 function updateMap() {
-  if (piece.color === "White") {
-    markPositions(motion_black, true);
-  } else {
-    markPositions(motion_white, true);
-  }
+  square.forEach((item) => {
+    const col = item.id[0];
+    const row = item.id[1];
+
+    if (item.innerHTML.trim() === "") {
+      const index = parseInt(col + row);
+      maps.delete(index);
+    } else {
+      const img = item.querySelector("img");
+      const type = img.getAttribute("alt");
+      const index = parseInt(col + row);
+      maps.set(index, type);
+    }
+  });
 }
 
 function markPositions(steps, view = false) {
@@ -173,8 +175,6 @@ function markPositions(steps, view = false) {
       if (next.id == item.toString().padStart(2, "0")) {
         if (!view) {
           position.classList.add("next");
-        } else {
-          position.classList.add("orange");
         }
       }
     });
@@ -277,6 +277,13 @@ function move(element) {
 
   clearSelection();
   updateMap();
+}
+
+function clearSelection() {
+  square.forEach((item) => {
+    item.classList.remove("next");
+    item.classList.remove("orange");
+  });
 }
 
 //#endregion
