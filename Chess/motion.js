@@ -1,3 +1,36 @@
+// #region [STANDARD MOVIMENTS]
+
+const isValidPosition = (col, row) =>
+  col >= 0 && col < 8 && row >= 0 && row < 8;
+
+const getStepsInDirection = (position, color, increments) => {
+  const steps = [];
+  const [col, row] = position.split("").map((char) => parseInt(char));
+
+  steps.push(parseInt(position));
+
+  for (const [incrementX, incrementY] of increments) {
+    let nextCol = col + incrementX;
+    let nextRow = row + incrementY;
+
+    while (isValidPosition(nextCol, nextRow)) {
+      const nextPosition = parseInt(nextCol.toString() + nextRow.toString());
+      if (!maps.has(nextPosition)) {
+        steps.push(nextPosition);
+      } else if (!maps.get(nextPosition).includes(color)) {
+        steps.push(nextPosition);
+        break;
+      } else {
+        break;
+      }
+      nextCol += incrementX;
+      nextRow += incrementY;
+    }
+  }
+
+  return steps;
+};
+
 const movePawn = (position, color) => {
   const direction = color == "White" ? -1 : 1;
   const initialPosition = color == "White" ? 6 : 1;
@@ -29,3 +62,27 @@ const movePawn = (position, color) => {
 
   return steps;
 };
+
+const moveKnight = (position, color) => {
+  const knightMoves = [12, -8, 19, 21, -12, 8, -19, -21];
+  const currentPosition = parseInt(position);
+  let steps = [];
+
+  steps.push(currentPosition);
+
+  knightMoves.forEach((item) => {
+    const newPosition = currentPosition + item;
+    const check = newPosition.toString().padStart(2, "0");
+
+    if (
+      isValidPosition(check[0], check[1]) &&
+      (!maps.has(newPosition) || !maps.get(newPosition).includes(color))
+    ) {
+      steps.push(newPosition);
+    }
+  });
+
+  return steps;
+};
+
+// #endregion

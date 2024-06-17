@@ -147,6 +147,14 @@ function selected(position, type, color) {
       }
     });
   }
+
+  if (type.includes("Knight")) {
+    square.forEach((item) => {
+      if (item.id === position) {
+        markPositions(moveKnight(item.id, color));
+      }
+    });
+  }
 }
 
 function updateMap() {
