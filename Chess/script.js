@@ -148,6 +148,15 @@ function selected(position, type, color) {
     });
   }
 
+  if (type.includes("Rook")) {
+    square.forEach((item) => {
+      if (item.id === position) {
+        markPositions(moveRook(item.id, color));
+        //markPositions(moveRoque(position));
+      }
+    });
+  }
+
   if (type.includes("Knight")) {
     square.forEach((item) => {
       if (item.id === position) {
@@ -261,27 +270,14 @@ function move(element) {
 
   if (element.id === piece.position) return;
 
-  if (element.alt?.includes("King")) roqueConditionMove(element);
-
   if (element.classList.contains("next")) {
-    if (!imgElement.getAttribute("data-move")) {
-      if (imgElement.alt.includes("King") || imgElement.alt.includes("Rook")) {
-        imgElement.setAttribute("data-move", "true");
-        if (getPieceByPosition(element.id)) roque(piece.position, element.id);
-        else {
-          element.innerHTML = "";
-          element.appendChild(imgElement);
-        }
-      } else {
-        element.innerHTML = "";
-        element.appendChild(imgElement);
-      }
-    }
-
-    imgElement.setAttribute("data-position", element.id);
-
-    turn = turn == "White" ? (turn = "Black") : (turn = "White");
+    element.innerHTML = "";
+    element.appendChild(imgElement);
   }
+
+  imgElement.setAttribute("data-position", element.id);
+
+  turn = turn == "White" ? (turn = "Black") : (turn = "White");
 
   clearSelection();
   updateMap();
