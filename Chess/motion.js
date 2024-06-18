@@ -63,6 +63,19 @@ const movePawn = (position, color) => {
   return steps;
 };
 
+const moveRook = (position, color) => {
+  const steps = [];
+  const increments = [
+    [1, 0],
+    [-1, 0],
+    [0, 1],
+    [0, -1],
+  ];
+  const stepsInDirection = getStepsInDirection(position, color, increments);
+  steps.push(...stepsInDirection);
+  return steps;
+};
+
 const moveKnight = (position, color) => {
   const knightMoves = [12, -8, 19, 21, -12, 8, -19, -21];
   const currentPosition = parseInt(position);
