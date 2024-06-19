@@ -121,6 +121,7 @@ function pieceAction() {
 }
 
 function selected(position, type, color) {
+  console.log(color);
   if (color != turn) return;
 
   let out = false;
@@ -166,6 +167,19 @@ function selected(position, type, color) {
   }
 }
 
+function markPositions(steps) {
+  console.log(steps);
+  if (steps == null) return;
+  steps.forEach((item) => {
+    square.forEach((next) => {
+      const position = document.getElementById(next.id);
+      if (next.id == item.toString().padStart(2, "0")) {
+        position.classList.add("next");
+      }
+    });
+  });
+}
+
 function updateMap() {
   square.forEach((item) => {
     const col = item.id[0];
@@ -180,21 +194,6 @@ function updateMap() {
       const index = parseInt(col + row);
       maps.set(index, type);
     }
-  });
-}
-
-function markPositions(steps, view = false) {
-  console.log(steps);
-  if (steps == null) return;
-  steps.forEach((item) => {
-    square.forEach((next) => {
-      const position = document.getElementById(next.id);
-      if (next.id == item.toString().padStart(2, "0")) {
-        if (!view) {
-          position.classList.add("next");
-        }
-      }
-    });
   });
 }
 
@@ -273,11 +272,11 @@ function move(element) {
   if (element.classList.contains("next")) {
     element.innerHTML = "";
     element.appendChild(imgElement);
+
+    imgElement.setAttribute("data-position", element.id);
+
+    turn = turn == "White" ? (turn = "Black") : (turn = "White");
   }
-
-  imgElement.setAttribute("data-position", element.id);
-
-  turn = turn == "White" ? (turn = "Black") : (turn = "White");
 
   clearSelection();
   updateMap();
