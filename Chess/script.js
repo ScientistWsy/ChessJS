@@ -157,6 +157,14 @@ function selected(position, type, color) {
       }
     });
   }
+ 
+  if (type.includes('Bishop')) {
+    square.forEach(item => {
+        if (item.id === position) {
+            markPositions(moveBishop(item.id, color));
+        }
+    })
+  }
 
   if (type.includes("Knight")) {
     square.forEach((item) => {
