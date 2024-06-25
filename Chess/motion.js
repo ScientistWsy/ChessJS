@@ -76,6 +76,16 @@ const moveRook = (position, color) => {
   return steps;
 };
 
+const moveBishop = (position, color) => {
+  const increments = [
+    [1, 1],
+    [1, -1],
+    [-1, 1],
+    [-1, -1],
+  ];
+  return getStepsInDirection(position, color, increments);
+};
+
 const moveKnight = (position, color) => {
   const knightMoves = [12, -8, 19, 21, -12, 8, -19, -21];
   const currentPosition = parseInt(position);
