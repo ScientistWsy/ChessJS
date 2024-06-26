@@ -165,6 +165,14 @@ function selected(position, type, color) {
         }
     })
   }
+  
+  if (type.includes('Queen')) {
+    square.forEach(item => {
+        if (item.id === position) {
+            markPositions(moveQueen(item.id, color));
+        }
+    })
+  }
 
   if (type.includes("Knight")) {
     square.forEach((item) => {
