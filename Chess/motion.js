@@ -108,4 +108,18 @@ const moveKnight = (position, color) => {
   return steps;
 };
 
+const moveQueen = (position, color) => {
+  const increments = [
+    [1, 0],
+    [-1, 0],
+    [0, 1],
+    [0, -1],
+    [1, 1],
+    [1, -1],
+    [-1, 1],
+    [-1, -1],
+  ];
+  return getStepsInDirection(position, color, increments);
+};
+
 // #endregion
