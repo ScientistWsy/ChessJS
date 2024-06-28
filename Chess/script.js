@@ -157,27 +157,36 @@ function selected(position, type, color) {
       }
     });
   }
- 
-  if (type.includes('Bishop')) {
-    square.forEach(item => {
-        if (item.id === position) {
-            markPositions(moveBishop(item.id, color));
-        }
-    })
-  }
-  
-  if (type.includes('Queen')) {
-    square.forEach(item => {
-        if (item.id === position) {
-            markPositions(moveQueen(item.id, color));
-        }
-    })
-  }
 
   if (type.includes("Knight")) {
     square.forEach((item) => {
       if (item.id === position) {
         markPositions(moveKnight(item.id, color));
+      }
+    });
+  }
+
+  if (type.includes("Bishop")) {
+    square.forEach((item) => {
+      if (item.id === position) {
+        markPositions(moveBishop(item.id, color));
+      }
+    });
+  }
+
+  if (type.includes("Queen")) {
+    square.forEach((item) => {
+      if (item.id === position) {
+        markPositions(moveQueen(item.id, color));
+      }
+    });
+  }
+
+  if (type.includes("King")) {
+    square.forEach((item) => {
+      if (item.id === position) {
+        markPositions(moveKing(item.id, color));
+        markPositions(moveRoque(position));
       }
     });
   }
