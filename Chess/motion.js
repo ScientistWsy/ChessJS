@@ -122,4 +122,24 @@ const moveQueen = (position, color) => {
   return getStepsInDirection(position, color, increments);
 };
 
+const moveKing = (position, color) => {
+  const direction = [01, -01, 10, -10, 11, -11, 09, -09];
+  const positionInt = parseInt(position);
+  let steps = [];
+
+  steps.push(parseInt(position));
+
+  for (let i = 0; i < 8; i++) {
+    let next = positionInt + direction[i];
+    let check = next.toString().padStart(2, "0");
+    if (isValidPosition(parseInt(check[0]), parseInt(check[1]))) {
+      if (maps.has(next)) {
+        if (!maps.get(next).includes(color)) steps.push(next);
+      } else steps.push(next);
+    }
+  }
+
+  return steps;
+};
+
 // #endregion
