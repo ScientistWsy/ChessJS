@@ -25,6 +25,10 @@ let square = [];
 
 let maps = new Map();
 
+let motion_white = []; //new Map()
+
+let motion_black = []; //new Map()
+
 //#endregion
 
 //#region Setup
