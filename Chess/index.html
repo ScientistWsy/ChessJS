@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="ChessFiles/icon.ico" />
     <link rel="stylesheet" href="style.css" />
     <script defer src="script.js"></script>
     <script defer src="motion.js"></script>
@@ -11,16 +12,26 @@
   </head>
 
   <body>
-    <div>
-      <div id="page">
-        <div style="position: relative">
-          <img
-            src="ChessFiles/Board.png"
-            alt="Board"
-            id="img"
-            style="max-height: 95vh; width: auto; margin: 0 auto"
-          />
+    <div id="page">
+      <div id="game">
+        <div id="status">
+          <div id="status-bar">
+            <span id="turn-indicator" data-color="White">Vez das Brancas</span>
+            <button id="restart" type="button">Novo jogo</button>
+          </div>
+          <div id="message"></div>
+        </div>
+
+        <div id="board-wrapper">
+          <img src="ChessFiles/Board.png" alt="Board" id="img" />
           <div id="board"></div>
+
+          <div id="promotion" class="hidden">
+            <div id="promotion-box">
+              <p>Promover o peão para:</p>
+              <div id="promotion-options"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

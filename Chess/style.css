@@ -1,16 +1,235 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background-color: #262421;
+  color: #e8e6e3;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
 #page {
   display: flex;
   justify-content: center;
-  align-items: center;
+  height: 100%;
+  height: 100dvh;
+  padding: 12px;
 }
 
+#game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 100%;
+  width: 100%;
+  max-width: 760px;
+}
+
+#status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 6px;
+  width: 100%;
+}
+
+#status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+
+#turn-indicator {
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+
+#turn-indicator[data-color="White"] {
+  background-color: #f0f0f0;
+  color: #262421;
+}
+
+#turn-indicator[data-color="Black"] {
+  background-color: #3a3835;
+  color: #f0f0f0;
+}
+
+/* Altura mínima reservada para o tabuleiro não pular quando aparece "Xeque!" */
+#message {
+  color: #f0c674;
+  font-weight: 600;
+  min-height: 21px;
+  text-align: center;
+}
+
+#restart {
+  padding: 5px 14px;
+  border: none;
+  border-radius: 4px;
+  background-color: #7fa650;
+  color: #fff;
+  font-weight: 600;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+#restart:hover {
+  background-color: #6d9142;
+}
+
+/* O tabuleiro é quadrado: ele encolhe até caber na altura que sobrou e a
+   largura vem do aspect-ratio. É daqui que sai toda a responsividade. */
+#board-wrapper {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  flex: 0 1 auto;
+  min-height: 0;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+}
+
+/* Cada casa ocupa 1/8 do tabuleiro; o topo e a esquerda vêm do script */
 .square {
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  /*background-color: rgba(52, 152, 219, 0.5);*/
+  width: 12.5%;
+  height: 12.5%;
 }
 
-.next {
-  background-color: rgba(52, 152, 219, 0.5);
+.square .piece {
+  cursor: pointer;
+  /* Evita o menu de arrastar/salvar imagem no toque longo do celular */
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.last-move {
+  background-color: rgba(246, 246, 105, 0.35);
+}
+
+.selected {
+  background-color: rgba(246, 246, 105, 0.55);
+}
+
+/* Casa livre: bolinha no centro */
+.next::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30%;
+  height: 30%;
+  border-radius: 50%;
+  background-color: rgba(52, 152, 219, 0.55);
+  pointer-events: none;
+}
+
+/* Casa com peça para capturar: anel em volta */
+.next.capture::after {
+  width: 86%;
+  height: 86%;
+  background-color: transparent;
+  border: 6px solid rgba(231, 76, 60, 0.6);
+}
+
+.next.castle::after {
+  background-color: rgba(127, 166, 80, 0.7);
+}
+
+.check {
+  background: radial-gradient(
+    circle,
+    rgba(231, 76, 60, 0.85) 0%,
+    rgba(231, 76, 60, 0) 70%
+  );
+}
+
+#promotion {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+#promotion.hidden {
+  display: none;
+}
+
+#promotion-box {
+  background-color: #302e2b;
+  border-radius: 8px;
+  padding: 16px;
+  max-width: 92%;
+  text-align: center;
+}
+
+#promotion-box p {
+  margin: 0 0 12px;
+  font-weight: 600;
+}
+
+#promotion-options {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.promotion-option {
+  width: min(16vw, 64px);
+  height: min(16vw, 64px);
+  padding: 6px;
+  border: none;
+  border-radius: 6px;
+  background-color: #3f3d3a;
+  cursor: pointer;
+}
+
+.promotion-option img {
+  width: 100%;
+  height: 100%;
+}
+
+.promotion-option:hover {
+  background-color: #7fa650;
+}
+
+/* Telas pequenas: tudo um pouco mais compacto */
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  #page {
+    padding: 8px;
+  }
+
+  .next.capture::after {
+    border-width: 4px;
+  }
 }
